@@ -16,7 +16,7 @@ class ListOffersInteractorTests: XCTestCase {
 
     override func setUpWithError() throws {
         sut = ListOffersInteractor()
-        workerMock = ListOffersWorkerMock()
+        workerMock = ListOffersWorkerMock(store: OffersAPI())
         presenterMock = ListOffersPresenterMock()
         sut.worker = workerMock
         sut.presenter = presenterMock

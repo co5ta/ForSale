@@ -21,6 +21,11 @@
 		441713922867B70800AA5B3E /* ListOffersModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713912867B70800AA5B3E /* ListOffersModels.swift */; };
 		4417139528685B9000AA5B3E /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4417139428685B9000AA5B3E /* Offer.swift */; };
 		4417139728685C1400AA5B3E /* OfferCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4417139628685C1400AA5B3E /* OfferCategory.swift */; };
+		441713A22869037C00AA5B3E /* OffersAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713A12869037C00AA5B3E /* OffersAPI.swift */; };
+		441713A72869223C00AA5B3E /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713A62869223C00AA5B3E /* NetworkError.swift */; };
+		441713AA2869252D00AA5B3E /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713A92869252D00AA5B3E /* URLSession.swift */; };
+		441713B1286A200500AA5B3E /* ListOffersWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713B0286A200500AA5B3E /* ListOffersWorkerTests.swift */; };
+		441713B3286A25CF00AA5B3E /* OffersAPIMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713B2286A25CF00AA5B3E /* OffersAPIMock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +56,11 @@
 		441713912867B70800AA5B3E /* ListOffersModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOffersModels.swift; sourceTree = "<group>"; };
 		4417139428685B9000AA5B3E /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		4417139628685C1400AA5B3E /* OfferCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferCategory.swift; sourceTree = "<group>"; };
+		441713A12869037C00AA5B3E /* OffersAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersAPI.swift; sourceTree = "<group>"; };
+		441713A62869223C00AA5B3E /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		441713A92869252D00AA5B3E /* URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
+		441713B0286A200500AA5B3E /* ListOffersWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOffersWorkerTests.swift; sourceTree = "<group>"; };
+		441713B2286A25CF00AA5B3E /* OffersAPIMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersAPIMock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +104,9 @@
 			children = (
 				441713682867876000AA5B3E /* ViewController.swift */,
 				4417139328685B7900AA5B3E /* Models */,
+				441713A4286903CC00AA5B3E /* Services */,
 				4417139B2868B8CA00AA5B3E /* Scenes */,
+				441713A82869251200AA5B3E /* Extensions */,
 				44171378286788F700AA5B3E /* Supporting Files */,
 			);
 			path = ForSale;
@@ -126,7 +138,7 @@
 		4417137F28678E7100AA5B3E /* ForSaleTests */ = {
 			isa = PBXGroup;
 			children = (
-				4417138028678E7100AA5B3E /* ListOffersInteractorTests.swift */,
+				441713AB286926EA00AA5B3E /* Scenes */,
 				4417139F2868DF2E00AA5B3E /* Doubles */,
 			);
 			path = ForSaleTests;
@@ -152,10 +164,45 @@
 		4417139F2868DF2E00AA5B3E /* Doubles */ = {
 			isa = PBXGroup;
 			children = (
+				441713B2286A25CF00AA5B3E /* OffersAPIMock.swift */,
 				44171389286791B400AA5B3E /* ListOffersWorkerMock.swift */,
 				4417138D2867B38F00AA5B3E /* ListOffersPresenterMock.swift */,
 			);
 			path = Doubles;
+			sourceTree = "<group>";
+		};
+		441713A4286903CC00AA5B3E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				441713A12869037C00AA5B3E /* OffersAPI.swift */,
+				441713A62869223C00AA5B3E /* NetworkError.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		441713A82869251200AA5B3E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				441713A92869252D00AA5B3E /* URLSession.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		441713AB286926EA00AA5B3E /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				441713AC2869270300AA5B3E /* ListOffers */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		441713AC2869270300AA5B3E /* ListOffers */ = {
+			isa = PBXGroup;
+			children = (
+				4417138028678E7100AA5B3E /* ListOffersInteractorTests.swift */,
+				441713B0286A200500AA5B3E /* ListOffersWorkerTests.swift */,
+			);
+			path = ListOffers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,7 +305,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				441713A22869037C00AA5B3E /* OffersAPI.swift in Sources */,
 				4417139528685B9000AA5B3E /* Offer.swift in Sources */,
+				441713AA2869252D00AA5B3E /* URLSession.swift in Sources */,
 				441713922867B70800AA5B3E /* ListOffersModels.swift in Sources */,
 				4417138C2867947E00AA5B3E /* ListOffersWorker.swift in Sources */,
 				441713692867876000AA5B3E /* ViewController.swift in Sources */,
@@ -266,6 +315,7 @@
 				4417139728685C1400AA5B3E /* OfferCategory.swift in Sources */,
 				441713652867876000AA5B3E /* AppDelegate.swift in Sources */,
 				441713672867876000AA5B3E /* SceneDelegate.swift in Sources */,
+				441713A72869223C00AA5B3E /* NetworkError.swift in Sources */,
 				441713902867B42400AA5B3E /* ListOffersPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -274,8 +324,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				441713B1286A200500AA5B3E /* ListOffersWorkerTests.swift in Sources */,
 				4417138128678E7100AA5B3E /* ListOffersInteractorTests.swift in Sources */,
 				4417138E2867B38F00AA5B3E /* ListOffersPresenterMock.swift in Sources */,
+				441713B3286A25CF00AA5B3E /* OffersAPIMock.swift in Sources */,
 				4417138A286791B400AA5B3E /* ListOffersWorkerMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -352,7 +404,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -406,7 +458,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

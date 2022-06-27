@@ -17,7 +17,7 @@ protocol AnyListOffersDataStore {
 }
 
 class ListOffersInteractor: AnyListOffersInteractor, AnyListOffersDataStore {
-    var worker = ListOffersWorker()
+    var worker = ListOffersWorker(store: OffersAPI())
     var presenter: AnyListOffersPresenter?
     var categories: [OfferCategory] = []
     var offers: [Offer] = []

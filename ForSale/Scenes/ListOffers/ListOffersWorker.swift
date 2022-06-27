@@ -9,11 +9,25 @@ import Foundation
 
 class ListOffersWorker {
 
+    var store: AnyOfferStore
+
+    init(store: AnyOfferStore) {
+        self.store = store
+    }
+
     func fetchCategories() async throws -> [OfferCategory] {
-        return []
+        let categories = try await store.fetchCategories()
+        return categories
     }
 
     func fetchOffers() async throws -> [Offer] {
-        return []
+        let offers = try await store.fetchOffers()
+        return offers
     }
+}
+
+
+protocol AnyOfferStore {
+    func fetchCategories() async throws -> [OfferCategory]
+    func fetchOffers() async throws -> [Offer]
 }

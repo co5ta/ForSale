@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OfferCategory {
+struct OfferCategory: Decodable {
     let id: Int
     let title: String
 }
