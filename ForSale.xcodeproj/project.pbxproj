@@ -26,6 +26,8 @@
 		441713AA2869252D00AA5B3E /* URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713A92869252D00AA5B3E /* URLSession.swift */; };
 		441713B1286A200500AA5B3E /* ListOffersWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713B0286A200500AA5B3E /* ListOffersWorkerTests.swift */; };
 		441713B3286A25CF00AA5B3E /* OffersAPIMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713B2286A25CF00AA5B3E /* OffersAPIMock.swift */; };
+		441713B6286A3FCA00AA5B3E /* OffersAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713B5286A3FCA00AA5B3E /* OffersAPITests.swift */; };
+		441713B8286A41A300AA5B3E /* URLSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713B7286A41A300AA5B3E /* URLSessionMock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		441713A92869252D00AA5B3E /* URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSession.swift; sourceTree = "<group>"; };
 		441713B0286A200500AA5B3E /* ListOffersWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOffersWorkerTests.swift; sourceTree = "<group>"; };
 		441713B2286A25CF00AA5B3E /* OffersAPIMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersAPIMock.swift; sourceTree = "<group>"; };
+		441713B5286A3FCA00AA5B3E /* OffersAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersAPITests.swift; sourceTree = "<group>"; };
+		441713B7286A41A300AA5B3E /* URLSessionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionMock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +142,7 @@
 		4417137F28678E7100AA5B3E /* ForSaleTests */ = {
 			isa = PBXGroup;
 			children = (
+				441713B4286A3FB000AA5B3E /* Services */,
 				441713AB286926EA00AA5B3E /* Scenes */,
 				4417139F2868DF2E00AA5B3E /* Doubles */,
 			);
@@ -167,6 +172,7 @@
 				441713B2286A25CF00AA5B3E /* OffersAPIMock.swift */,
 				44171389286791B400AA5B3E /* ListOffersWorkerMock.swift */,
 				4417138D2867B38F00AA5B3E /* ListOffersPresenterMock.swift */,
+				441713B7286A41A300AA5B3E /* URLSessionMock.swift */,
 			);
 			path = Doubles;
 			sourceTree = "<group>";
@@ -203,6 +209,14 @@
 				441713B0286A200500AA5B3E /* ListOffersWorkerTests.swift */,
 			);
 			path = ListOffers;
+			sourceTree = "<group>";
+		};
+		441713B4286A3FB000AA5B3E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				441713B5286A3FCA00AA5B3E /* OffersAPITests.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,10 +339,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				441713B1286A200500AA5B3E /* ListOffersWorkerTests.swift in Sources */,
+				441713B6286A3FCA00AA5B3E /* OffersAPITests.swift in Sources */,
 				4417138128678E7100AA5B3E /* ListOffersInteractorTests.swift in Sources */,
 				4417138E2867B38F00AA5B3E /* ListOffersPresenterMock.swift in Sources */,
 				441713B3286A25CF00AA5B3E /* OffersAPIMock.swift in Sources */,
 				4417138A286791B400AA5B3E /* ListOffersWorkerMock.swift in Sources */,
+				441713B8286A41A300AA5B3E /* URLSessionMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,7 +7,13 @@
 
 import Foundation
 
-struct Offer: Decodable {
+struct Offer: Codable {
     let id: Int
     let title: String
+}
+
+extension Offer: Equatable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
 }

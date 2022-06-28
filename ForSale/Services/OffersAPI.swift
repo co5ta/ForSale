@@ -7,9 +7,12 @@
 
 import Foundation
 
-class OffersAPI: AnyOfferStore {
+protocol AnyURLSession {
+    func data(from url: URL) async throws -> (Data, URLResponse)
+}
 
-    var session: URLSession = URLSession.shared
+class OffersAPI: AnyOfferStore {
+    var session: AnyURLSession = URLSession.shared
 
     enum Endpoints {
         static let categories = "https://raw.githubusercontent.com/leboncoin/paperclip/master/categories.json"
@@ -24,7 +27,7 @@ class OffersAPI: AnyOfferStore {
         try await fetchData(type: [Offer].self, endpoint: Endpoints.offers)
     }
 
-    func fetchData<T: Decodable>(type: T.Type, endpoint: String) async throws -> T {
+    private func fetchData<T: Decodable>(type: T.Type, endpoint: String) async throws -> T {
         guard let url = URL(string: endpoint) else { throw NetworkError.url }
         let (data, response) = try await session.data(from: url)
         guard let response = response as? HTTPURLResponse,
