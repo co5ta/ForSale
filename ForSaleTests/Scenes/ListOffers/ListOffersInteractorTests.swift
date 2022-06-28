@@ -13,6 +13,8 @@ class ListOffersInteractorTests: XCTestCase {
     var sut: ListOffersInteractor!
     var workerMock: ListOffersWorkerMock!
     var presenterMock: ListOffersPresenterMock!
+    let dummyOffer1 = Offer(id: 1, title: "", idCategory: 11)
+    let dummyOffer2 = Offer(id: 2, title: "", idCategory: 12)
 
     override func setUpWithError() throws {
         sut = ListOffersInteractor()
@@ -87,9 +89,7 @@ class ListOffersInteractorTests: XCTestCase {
     }
 
     func test_fetchOffersWithOneResult_shouldReturnOneOffer() async {
-        workerMock.fetchOffersData = [
-            Offer(id: 1, title: "")
-        ]
+        workerMock.fetchOffersData = [dummyOffer1]
 
         await sut.fetchOffers()
 
@@ -98,8 +98,8 @@ class ListOffersInteractorTests: XCTestCase {
 
     func test_fetchOffersWithTwoResults_shouldReturnTwoOffers() async {
         workerMock.fetchOffersData = [
-            Offer(id: 1, title: ""),
-            Offer(id: 2, title: "")
+            dummyOffer1,
+            dummyOffer2
         ]
 
         await sut.fetchOffers()

@@ -12,6 +12,8 @@ class ListOffersWorkerTests: XCTestCase {
 
     var sut: ListOffersWorker!
     var storeMock: OffersAPIMock!
+    let dummyOffer1 = Offer(id: 1, title: "", idCategory: 11)
+    let dummyOffer2 = Offer(id: 2, title: "", idCategory: 12)
 
     override func setUpWithError() throws {
         sut = ListOffersWorker(store: OffersAPI())
@@ -76,8 +78,8 @@ class ListOffersWorkerTests: XCTestCase {
 
     func test_fetchOffersWhithoutError_shouldReturnOffers() async {
         storeMock.fetchOffersData = [
-            Offer(id: 1, title: ""),
-            Offer(id: 2, title: "")
+            dummyOffer1,
+            dummyOffer2
         ]
 
         do {

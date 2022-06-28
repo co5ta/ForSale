@@ -13,6 +13,8 @@ class OffersAPITests: XCTestCase {
     var sut: OffersAPI!
     var sessionMock: URLSessionMock!
     var dummyURL: URL!
+    let dummyOffer1 = Offer(id: 1, title: "", idCategory: 11)
+    let dummyOffer2 = Offer(id: 2, title: "", idCategory: 12)
 
     override func setUpWithError() throws {
         sut = OffersAPI()
@@ -47,8 +49,8 @@ class OffersAPITests: XCTestCase {
 
     func test_fetchOffers_shouldReturnOffers() async throws {
         let expected = [
-            Offer(id: 1, title: ""),
-            Offer(id: 2, title: "")
+            dummyOffer1,
+            dummyOffer2
         ]
         sessionMock.urlSessionResult = (
             try JSONEncoder().encode(expected),
@@ -88,7 +90,7 @@ class OffersAPITests: XCTestCase {
     func test_fetchOffersWithError_shouldPassError() async throws {
         let expected = NSError(domain: "", code: 1234)
         sessionMock.urlSessionError = expected
-        let offers = [Offer(id: 1, title: "")]
+        let offers = [dummyOffer1]
         sessionMock.urlSessionResult = (
             try JSONEncoder().encode(offers),
             HTTPURLResponse(
@@ -115,8 +117,8 @@ class OffersAPITests: XCTestCase {
                 httpVersion: "HTTP/1.1",
                 headerFields: nil))
         let offers = [
-            Offer(id: 1, title: ""),
-            Offer(id: 2, title: "")
+            dummyOffer1,
+            dummyOffer2
         ]
         sessionMock.urlSessionResult = (
             try JSONEncoder().encode(offers),
@@ -139,8 +141,8 @@ class OffersAPITests: XCTestCase {
                 httpVersion: "HTTP/1.1",
                 headerFields: nil))
         let offers = [
-            Offer(id: 1, title: ""),
-            Offer(id: 2, title: "")
+            dummyOffer1,
+            dummyOffer2
         ]
         sessionMock.urlSessionResult = (
             try JSONEncoder().encode(offers),

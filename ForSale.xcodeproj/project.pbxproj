@@ -28,6 +28,9 @@
 		441713B3286A25CF00AA5B3E /* OffersAPIMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713B2286A25CF00AA5B3E /* OffersAPIMock.swift */; };
 		441713B6286A3FCA00AA5B3E /* OffersAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713B5286A3FCA00AA5B3E /* OffersAPITests.swift */; };
 		441713B8286A41A300AA5B3E /* URLSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713B7286A41A300AA5B3E /* URLSessionMock.swift */; };
+		441713BA286B1C9200AA5B3E /* ListOffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713B9286B1C9200AA5B3E /* ListOffersViewController.swift */; };
+		441713BC286B226F00AA5B3E /* ListOffersPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713BB286B226F00AA5B3E /* ListOffersPresenterTests.swift */; };
+		441713BE286B234100AA5B3E /* ListOffersViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713BD286B234100AA5B3E /* ListOffersViewControllerMock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +68,9 @@
 		441713B2286A25CF00AA5B3E /* OffersAPIMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersAPIMock.swift; sourceTree = "<group>"; };
 		441713B5286A3FCA00AA5B3E /* OffersAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersAPITests.swift; sourceTree = "<group>"; };
 		441713B7286A41A300AA5B3E /* URLSessionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionMock.swift; sourceTree = "<group>"; };
+		441713B9286B1C9200AA5B3E /* ListOffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOffersViewController.swift; sourceTree = "<group>"; };
+		441713BB286B226F00AA5B3E /* ListOffersPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOffersPresenterTests.swift; sourceTree = "<group>"; };
+		441713BD286B234100AA5B3E /* ListOffersViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOffersViewControllerMock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,10 +137,11 @@
 		4417137928678C7B00AA5B3E /* ListOffers */ = {
 			isa = PBXGroup;
 			children = (
-				4417138728678EE900AA5B3E /* ListOffersInteractor.swift */,
 				4417138B2867947E00AA5B3E /* ListOffersWorker.swift */,
+				4417138728678EE900AA5B3E /* ListOffersInteractor.swift */,
 				4417138F2867B42400AA5B3E /* ListOffersPresenter.swift */,
 				441713912867B70800AA5B3E /* ListOffersModels.swift */,
+				441713B9286B1C9200AA5B3E /* ListOffersViewController.swift */,
 			);
 			path = ListOffers;
 			sourceTree = "<group>";
@@ -169,10 +176,11 @@
 		4417139F2868DF2E00AA5B3E /* Doubles */ = {
 			isa = PBXGroup;
 			children = (
+				441713B7286A41A300AA5B3E /* URLSessionMock.swift */,
 				441713B2286A25CF00AA5B3E /* OffersAPIMock.swift */,
 				44171389286791B400AA5B3E /* ListOffersWorkerMock.swift */,
 				4417138D2867B38F00AA5B3E /* ListOffersPresenterMock.swift */,
-				441713B7286A41A300AA5B3E /* URLSessionMock.swift */,
+				441713BD286B234100AA5B3E /* ListOffersViewControllerMock.swift */,
 			);
 			path = Doubles;
 			sourceTree = "<group>";
@@ -205,8 +213,9 @@
 		441713AC2869270300AA5B3E /* ListOffers */ = {
 			isa = PBXGroup;
 			children = (
-				4417138028678E7100AA5B3E /* ListOffersInteractorTests.swift */,
 				441713B0286A200500AA5B3E /* ListOffersWorkerTests.swift */,
+				4417138028678E7100AA5B3E /* ListOffersInteractorTests.swift */,
+				441713BB286B226F00AA5B3E /* ListOffersPresenterTests.swift */,
 			);
 			path = ListOffers;
 			sourceTree = "<group>";
@@ -327,6 +336,7 @@
 				441713692867876000AA5B3E /* ViewController.swift in Sources */,
 				4417138828678EE900AA5B3E /* ListOffersInteractor.swift in Sources */,
 				4417139728685C1400AA5B3E /* OfferCategory.swift in Sources */,
+				441713BA286B1C9200AA5B3E /* ListOffersViewController.swift in Sources */,
 				441713652867876000AA5B3E /* AppDelegate.swift in Sources */,
 				441713672867876000AA5B3E /* SceneDelegate.swift in Sources */,
 				441713A72869223C00AA5B3E /* NetworkError.swift in Sources */,
@@ -342,7 +352,9 @@
 				441713B6286A3FCA00AA5B3E /* OffersAPITests.swift in Sources */,
 				4417138128678E7100AA5B3E /* ListOffersInteractorTests.swift in Sources */,
 				4417138E2867B38F00AA5B3E /* ListOffersPresenterMock.swift in Sources */,
+				441713BE286B234100AA5B3E /* ListOffersViewControllerMock.swift in Sources */,
 				441713B3286A25CF00AA5B3E /* OffersAPIMock.swift in Sources */,
+				441713BC286B226F00AA5B3E /* ListOffersPresenterTests.swift in Sources */,
 				4417138A286791B400AA5B3E /* ListOffersWorkerMock.swift in Sources */,
 				441713B8286A41A300AA5B3E /* URLSessionMock.swift in Sources */,
 			);

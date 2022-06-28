@@ -13,5 +13,12 @@ enum ListOffers {
             var categories: [OfferCategory]
             var offers: [Offer]
         }
+        struct ViewModel {
+            struct Offer {
+                let title: String
+                let categoryName: String?
+            }
+            var offers: [ViewModel.Offer]
+        }
     }
 }
