@@ -14,7 +14,8 @@ enum ListOffers {
             var offers: [Offer]
         }
         struct ViewModel {
-            struct Offer {
+            struct Offer: Hashable {
+                let id: Int
                 let title: String
                 let categoryName: String?
             }

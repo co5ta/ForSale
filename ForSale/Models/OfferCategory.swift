@@ -9,7 +9,7 @@ import Foundation
 
 struct OfferCategory: Codable {
     let id: Int
-    let title: String
+    let name: String
 }
 
 extension OfferCategory: Equatable {

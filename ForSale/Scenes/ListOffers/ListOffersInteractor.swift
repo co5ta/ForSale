@@ -27,9 +27,10 @@ class ListOffersInteractor: AnyListOffersInteractor, AnyListOffersDataStore {
             categories = try await worker.fetchCategories()
             offers = try await worker.fetchOffers()
             let response = ListOffers.FetchOffers.Response(categories: categories, offers: offers)
-            presenter?.present(response: response)
+            await presenter?.present(response: response)
         } catch {
-            presenter?.present(errorMessage: "An error occured")
+            print(error.localizedDescription)
+            await presenter?.present(errorMessage: "An error occured")
         }
     }
 }

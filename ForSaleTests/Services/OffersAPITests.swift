@@ -13,8 +13,10 @@ class OffersAPITests: XCTestCase {
     var sut: OffersAPI!
     var sessionMock: URLSessionMock!
     var dummyURL: URL!
-    let dummyOffer1 = Offer(id: 1, title: "", idCategory: 11)
-    let dummyOffer2 = Offer(id: 2, title: "", idCategory: 12)
+    let dummyOffer1 = Offer(id: 1, title: "", categoryId: 11)
+    let dummyOffer2 = Offer(id: 2, title: "", categoryId: 12)
+    let dummyCategory1 = OfferCategory(id: 11, name: "")
+    let dummyCategory2 = OfferCategory(id: 12, name: "")
 
     override func setUpWithError() throws {
         sut = OffersAPI()
@@ -31,8 +33,8 @@ class OffersAPITests: XCTestCase {
 
     func test_fetchCategories_shouldReturnCategories() async throws {
         let expected = [
-            OfferCategory(id: 1, title: ""),
-            OfferCategory(id: 2, title: "")
+            dummyCategory1,
+            dummyCategory2
         ]
         sessionMock.urlSessionResult = (
             try JSONEncoder().encode(expected),
@@ -68,7 +70,7 @@ class OffersAPITests: XCTestCase {
     func test_fetchCategoriesWithError_shouldPassError() async throws {
         let expected = NSError(domain: "", code: 1234)
         sessionMock.urlSessionError = expected
-        let categories = [OfferCategory(id: 1, title: "")]
+        let categories = [dummyCategory1]
         sessionMock.urlSessionResult = (
             try JSONEncoder().encode(categories),
             HTTPURLResponse(

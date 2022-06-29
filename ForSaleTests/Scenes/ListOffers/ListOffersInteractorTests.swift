@@ -13,8 +13,10 @@ class ListOffersInteractorTests: XCTestCase {
     var sut: ListOffersInteractor!
     var workerMock: ListOffersWorkerMock!
     var presenterMock: ListOffersPresenterMock!
-    let dummyOffer1 = Offer(id: 1, title: "", idCategory: 11)
-    let dummyOffer2 = Offer(id: 2, title: "", idCategory: 12)
+    let dummyOffer1 = Offer(id: 1, title: "", categoryId: 11)
+    let dummyOffer2 = Offer(id: 2, title: "", categoryId: 12)
+    let dummyCategory1 = OfferCategory(id: 11, name: "")
+    let dummyCategory2 = OfferCategory(id: 12, name: "")
 
     override func setUpWithError() throws {
         sut = ListOffersInteractor()
@@ -68,9 +70,7 @@ class ListOffersInteractorTests: XCTestCase {
     }
     
     func test_fetchCategoriesWithOneResult_shouldReturnOneCategory() async {
-        workerMock.fetchCategoriesData = [
-            OfferCategory(id: 1, title: "")
-        ]
+        workerMock.fetchCategoriesData = [dummyCategory1]
 
         await sut.fetchOffers()
 
@@ -79,8 +79,8 @@ class ListOffersInteractorTests: XCTestCase {
 
     func test_fetchCategoriesWithTwoResults_shouldReturnTwoCategories() async {
         workerMock.fetchCategoriesData = [
-            OfferCategory(id: 1, title: ""),
-            OfferCategory(id: 2, title: "")
+            dummyCategory1,
+            dummyCategory2
         ]
 
         await sut.fetchOffers()

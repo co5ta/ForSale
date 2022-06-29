@@ -13,6 +13,7 @@ protocol AnyURLSession {
 
 class OffersAPI: AnyOfferStore {
     var session: AnyURLSession = URLSession.shared
+    let decoder = JSONDecoder()
 
     enum Endpoints {
         static let categories = "https://raw.githubusercontent.com/leboncoin/paperclip/master/categories.json"
@@ -33,6 +34,7 @@ class OffersAPI: AnyOfferStore {
         guard let response = response as? HTTPURLResponse,
               (200...299).contains(response.statusCode)
         else { throw NetworkError.server(response) }
-        return try JSONDecoder().decode(type, from: data)
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return try decoder.decode(type, from: data)
     }
 }
