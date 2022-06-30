@@ -36,20 +36,26 @@ class ListOffersPresenter: AnyListOffersPresenter {
     }
 
     func getViewModelOffers(from response: ListOffers.FetchOffers.Response) -> [ListOffers.FetchOffers.ViewModel.Offer] {
-        return response.offers.map { offer in
-            let category = response.categories.first(where: { $0.id == offer.categoryId })
-            let price = NSNumber(value: offer.price)
+        return response
+            .offers
+            .sortedByDate()
+            .map { offer in
+                let category = response.categories.first(where: { $0.id == offer.categoryId })
+                return createViewModelOffer(with: offer, and: category)
+            }
+    }
 
-            return ListOffers.FetchOffers.ViewModel.Offer(
-                id: offer.id,
-                title: offer.title,
-                categoryName: category?.name,
-                price: numberFormatter.string(from: price),
-                date: dateFormatter.string(from: offer.creationDate),
-                imagePath: offer.imagesUrl?.thumb,
-                isUrgent: offer.isUrgent
-            )
-        }
+    func createViewModelOffer(with offer: Offer, and category: OfferCategory?)
+    -> ListOffers.FetchOffers.ViewModel.Offer {
+        let price = NSNumber(value: offer.price)
+        return ListOffers.FetchOffers.ViewModel.Offer(
+            id: offer.id,
+            title: offer.title,
+            categoryName: category?.name,
+            price: numberFormatter.string(from: price),
+            date: dateFormatter.string(from: offer.creationDate),
+            imagePath: offer.imagesUrl?.thumb,
+            isUrgent: offer.isUrgent)
     }
 
     func present(errorMessage: String) async {
