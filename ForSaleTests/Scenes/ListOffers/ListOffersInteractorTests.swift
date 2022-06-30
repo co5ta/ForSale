@@ -13,8 +13,10 @@ class ListOffersInteractorTests: XCTestCase {
     var sut: ListOffersInteractor!
     var workerMock: ListOffersWorkerMock!
     var presenterMock: ListOffersPresenterMock!
-    let dummyOffer1 = Offer(id: 1, title: "", categoryId: 11)
-    let dummyOffer2 = Offer(id: 2, title: "", categoryId: 12)
+    let dummyOffer1 = Offer(id: 1, title: "", categoryId: 11, description: "", price: 0,
+                            imagesUrl: nil, creationDate: Date(), isUrgent: false, siret: nil)
+    let dummyOffer2 = Offer(id: 2, title: "", categoryId: 12, description: "", price: 0,
+                            imagesUrl: nil, creationDate: Date(), isUrgent: false, siret: nil)
     let dummyCategory1 = OfferCategory(id: 11, name: "")
     let dummyCategory2 = OfferCategory(id: 12, name: "")
 

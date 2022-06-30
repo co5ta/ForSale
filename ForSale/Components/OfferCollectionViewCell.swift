@@ -8,8 +8,11 @@
 import UIKit
 
 class OfferCollectionViewCell: UICollectionViewCell {
-    var mainStackView = UIStackView()
-    var titleLabel = UILabel()
+    var offerSummaryView = OfferSummaryView()
+
+    override func prepareForReuse() {
+        offerSummaryView.imageView.image = nil
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,28 +23,19 @@ class OfferCollectionViewCell: UICollectionViewCell {
         super.init(coder: coder)
         setUp()
     }
-}
 
-private extension OfferCollectionViewCell {
-    func setUp() {
-        setUpStackView()
-        setUpTitleLabel()
+    func configure(with offer: ListOffers.FetchOffers.ViewModel.Offer, store: AnyOfferStore) {
+        offerSummaryView.configure(with: offer, store: store)
     }
 
-    func setUpStackView() {
-        contentView.addSubview(mainStackView)
-        mainStackView.axis = .vertical
-        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+    private func setUp() {
+        contentView.addSubview(offerSummaryView)
+        offerSummaryView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
-            mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            offerSummaryView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            offerSummaryView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            offerSummaryView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            offerSummaryView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
         ])
-    }
-
-    func setUpTitleLabel() {
-        mainStackView.addArrangedSubview(titleLabel)
-        titleLabel.numberOfLines = 0
     }
 }

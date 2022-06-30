@@ -18,6 +18,10 @@ enum ListOffers {
                 let id: Int
                 let title: String
                 let categoryName: String?
+                let price: String?
+                let date: String?
+                let imagePath: String?
+                let isUrgent: Bool
             }
             var offers: [ViewModel.Offer]
         }

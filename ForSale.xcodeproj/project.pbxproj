@@ -34,6 +34,7 @@
 		441713C1286B72E300AA5B3E /* OfferCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713C0286B72E300AA5B3E /* OfferCollectionViewCell.swift */; };
 		441713C5286C329B00AA5B3E /* ListOffersViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713C4286C329B00AA5B3E /* ListOffersViewControllerTests.swift */; };
 		441713C7286C337100AA5B3E /* ListOffersInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713C6286C337100AA5B3E /* ListOffersInteractorMock.swift */; };
+		441713CB286C4D2D00AA5B3E /* OfferSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441713CA286C4D2D00AA5B3E /* OfferSummaryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		441713C0286B72E300AA5B3E /* OfferCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferCollectionViewCell.swift; sourceTree = "<group>"; };
 		441713C4286C329B00AA5B3E /* ListOffersViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOffersViewControllerTests.swift; sourceTree = "<group>"; };
 		441713C6286C337100AA5B3E /* ListOffersInteractorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOffersInteractorMock.swift; sourceTree = "<group>"; };
+		441713CA286C4D2D00AA5B3E /* OfferSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferSummaryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				441713C0286B72E300AA5B3E /* OfferCollectionViewCell.swift */,
+				441713CA286C4D2D00AA5B3E /* OfferSummaryView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 				4417139528685B9000AA5B3E /* Offer.swift in Sources */,
 				441713AA2869252D00AA5B3E /* URLSession.swift in Sources */,
 				441713922867B70800AA5B3E /* ListOffersModels.swift in Sources */,
+				441713CB286C4D2D00AA5B3E /* OfferSummaryView.swift in Sources */,
 				4417138C2867947E00AA5B3E /* ListOffersWorker.swift in Sources */,
 				441713692867876000AA5B3E /* ViewController.swift in Sources */,
 				4417138828678EE900AA5B3E /* ListOffersInteractor.swift in Sources */,

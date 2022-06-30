@@ -12,9 +12,12 @@ class OffersAPITests: XCTestCase {
 
     var sut: OffersAPI!
     var sessionMock: URLSessionMock!
+    var encoder: JSONEncoder!
     var dummyURL: URL!
-    let dummyOffer1 = Offer(id: 1, title: "", categoryId: 11)
-    let dummyOffer2 = Offer(id: 2, title: "", categoryId: 12)
+    let dummyOffer1 = Offer(id: 1, title: "", categoryId: 11, description: "", price: 0,
+                            imagesUrl: nil, creationDate: Date(), isUrgent: false, siret: "")
+    let dummyOffer2 = Offer(id: 2, title: "", categoryId: 12, description: "", price: 0,
+                            imagesUrl: nil, creationDate: Date(), isUrgent: false, siret: "")
     let dummyCategory1 = OfferCategory(id: 11, name: "")
     let dummyCategory2 = OfferCategory(id: 12, name: "")
 
@@ -23,12 +26,16 @@ class OffersAPITests: XCTestCase {
         sessionMock = URLSessionMock()
         sut.session = sessionMock
         dummyURL = try XCTUnwrap(URL(string: "dummyUrl"))
+        encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        encoder.dateEncodingStrategy = .iso8601
     }
 
     override func tearDownWithError() throws {
         sut = nil
         sessionMock = nil
         dummyURL = nil
+        encoder = nil
     }
 
     func test_fetchCategories_shouldReturnCategories() async throws {
@@ -37,7 +44,7 @@ class OffersAPITests: XCTestCase {
             dummyCategory2
         ]
         sessionMock.urlSessionResult = (
-            try JSONEncoder().encode(expected),
+            try encoder.encode(expected),
             HTTPURLResponse(
                 url: dummyURL,
                 statusCode: 200,
@@ -55,13 +62,19 @@ class OffersAPITests: XCTestCase {
             dummyOffer2
         ]
         sessionMock.urlSessionResult = (
-            try JSONEncoder().encode(expected),
+            try encoder.encode(expected),
             HTTPURLResponse(
                 url: dummyURL,
                 statusCode: 200,
                 httpVersion: "HTTP/1.1",
                 headerFields: nil)!
         )
+
+        do {
+            _ = try await sut.fetchOffers()
+        } catch {
+            print(error)
+        }
 
         let offers = try await sut.fetchOffers()
         XCTAssertEqual(offers, expected)
@@ -72,7 +85,7 @@ class OffersAPITests: XCTestCase {
         sessionMock.urlSessionError = expected
         let categories = [dummyCategory1]
         sessionMock.urlSessionResult = (
-            try JSONEncoder().encode(categories),
+            try encoder.encode(categories),
             HTTPURLResponse(
                 url: dummyURL,
                 statusCode: 200,
@@ -94,7 +107,7 @@ class OffersAPITests: XCTestCase {
         sessionMock.urlSessionError = expected
         let offers = [dummyOffer1]
         sessionMock.urlSessionResult = (
-            try JSONEncoder().encode(offers),
+            try encoder.encode(offers),
             HTTPURLResponse(
                 url: dummyURL,
                 statusCode: 200,
@@ -123,7 +136,7 @@ class OffersAPITests: XCTestCase {
             dummyOffer2
         ]
         sessionMock.urlSessionResult = (
-            try JSONEncoder().encode(offers),
+            try encoder.encode(offers),
             response)
 
         do {
@@ -147,7 +160,7 @@ class OffersAPITests: XCTestCase {
             dummyOffer2
         ]
         sessionMock.urlSessionResult = (
-            try JSONEncoder().encode(offers),
+            try encoder.encode(offers),
             response)
 
         do {
@@ -161,7 +174,7 @@ class OffersAPITests: XCTestCase {
 
     func test_fetchOffers_whenJsonIsWrong_shouldPassDecodingError() async throws {
         sessionMock.urlSessionResult = (
-          try JSONEncoder().encode("dummy"),
+          try encoder.encode("dummy"),
           HTTPURLResponse(url: dummyURL,
             statusCode: 200,
             httpVersion: "HTTP/1.1",

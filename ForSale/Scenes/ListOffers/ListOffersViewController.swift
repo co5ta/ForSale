@@ -44,6 +44,7 @@ class ListOffersViewController: UIViewController, AnyListOffersViewController {
     }
 
     private func setUpViews() {
+        title = "Dernières annonces"
         view.backgroundColor = .white
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -100,7 +101,7 @@ private extension ListOffersViewController {
 
     func makeCellRegistration() -> CellRegistration {
         CellRegistration { cell, indexPath, offer in
-            cell.titleLabel.text = offer.title
+            cell.configure(with: offer, store: OffersAPI())
         }
     }
 

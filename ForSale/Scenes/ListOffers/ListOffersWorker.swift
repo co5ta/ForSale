@@ -25,9 +25,3 @@ class ListOffersWorker {
         return offers
     }
 }
-
-
-protocol AnyOfferStore {
-    func fetchCategories() async throws -> [OfferCategory]
-    func fetchOffers() async throws -> [Offer]
-}
