@@ -86,7 +86,10 @@ class ListOffersViewController: UIViewController, AnyListOffersViewController {
     }
 
     func display(errorMessage: String) {
-        print("erreur")
+        let alert = UIAlertController(title: errorMessage, message: nil, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default)
+        alert.addAction(action)
+        self.present(alert, animated: true)
     }
 }
 
