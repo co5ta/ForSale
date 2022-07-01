@@ -23,6 +23,7 @@ class ListOffersViewController: UIViewController, AnyListOffersViewController {
     var viewModel: ListOffers.FetchOffers.ViewModel?
     var offers = CurrentValueSubject<[ListOffers.FetchOffers.ViewModel.Offer], Never>([])
     var interactor: AnyListOffersInteractor?
+    var router: (AnyListOffersRouter & AnyListOffersDataPassing)?
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -43,15 +44,20 @@ class ListOffersViewController: UIViewController, AnyListOffersViewController {
         let viewController = self
         let interactor = ListOffersInteractor()
         let presenter = ListOffersPresenter()
+        let router = ListOffersRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         presenter.viewController = viewController
+        router.viewController = viewController
+        router.dataStore = interactor
     }
 
     private func setUpViews() {
         title = "Dernières annonces"
         view.backgroundColor = .white
         view.addSubview(collectionView)
+        collectionView.delegate = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -154,6 +160,13 @@ private extension ListOffersViewController {
             self.makeMenu()
         }
         .store(in: &cancellables)
+    }
+}
+
+// MARK: CollectionViewDelegate
+extension ListOffersViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        router?.routeToShowOffer()
     }
 }
 
