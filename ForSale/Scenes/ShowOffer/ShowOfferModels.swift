@@ -23,6 +23,8 @@ enum ShowOffer {
                 let date: String?
                 let imagePath: String?
                 let isUrgent: Bool
+                let description: String?
+                let siret: String?
             }
             var offer: ViewModel.Offer
         }

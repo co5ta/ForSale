@@ -14,16 +14,17 @@ protocol AnyListOffersViewController: AnyObject {
 }
 
 class ListOffersViewController: UIViewController, AnyListOffersViewController {
+    var interactor: AnyListOffersInteractor?
+    var router: (AnyListOffersRouter & AnyListOffersDataPassing)?
+    var viewModel: ListOffers.FetchOffers.ViewModel?
+    private var dataSource: DataSource?
+    var offers = CurrentValueSubject<[ListOffers.FetchOffers.ViewModel.Offer], Never>([])
+    private var cancellables = Set<AnyCancellable>()
     lazy var collectionView = makeCollectionView()
     private var menuButton: UIBarButtonItem?
     private var categoriesMenu: UIMenu?
     private var selectedCategoryId: Int?
-    private var cancellables = Set<AnyCancellable>()
-    private var dataSource: DataSource?
-    var viewModel: ListOffers.FetchOffers.ViewModel?
-    var offers = CurrentValueSubject<[ListOffers.FetchOffers.ViewModel.Offer], Never>([])
-    var interactor: AnyListOffersInteractor?
-    var router: (AnyListOffersRouter & AnyListOffersDataPassing)?
+    var selectedOfferIndex: Int?
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -63,7 +64,7 @@ class ListOffersViewController: UIViewController, AnyListOffersViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 
@@ -73,10 +74,6 @@ class ListOffersViewController: UIViewController, AnyListOffersViewController {
         Task {
             await fetchOffers()
         }
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
 
     func fetchOffers() async {
@@ -166,6 +163,7 @@ private extension ListOffersViewController {
 // MARK: CollectionViewDelegate
 extension ListOffersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedOfferIndex = indexPath.item
         router?.routeToShowOffer()
     }
 }

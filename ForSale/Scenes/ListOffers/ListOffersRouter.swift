@@ -29,9 +29,10 @@ class ListOffersRouter: NSObject, AnyListOffersRouter, AnyListOffersDataPassing 
     }
 
     func passDataToShowOffer(source: AnyListOffersDataStore, destination: inout AnyShowOfferDataStore) {
-        guard let itemIndex = viewController?.collectionView.indexPathsForSelectedItems?.first?.row
-        else { return }
-        destination.offer = source.offers[itemIndex]
+        guard let itemIndex = viewController?.selectedOfferIndex else { return }
+        let offer = source.offers[itemIndex]
+        destination.offer = offer
+        destination.category = source.categories.first(where: { $0.id == offer.categoryId })
     }
 
     func navigateToShowOffer(source: ListOffersViewController, destination: ShowOfferViewController) {

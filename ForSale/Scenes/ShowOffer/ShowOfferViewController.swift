@@ -12,9 +12,13 @@ protocol AnyShowOfferViewController: AnyObject {
 }
 
 class ShowOfferViewController: UIViewController, AnyShowOfferViewController {
-
     var interactor: AnyShowOfferInteractor?
     var router: (AnyShowOfferRouter & AnyShowOfferDataPassing)?
+    var scrollView = UIScrollView()
+    var mainStackView = UIStackView()
+    var offerSummaryView = OfferSummaryView()
+    var descriptionLabel = UILabel()
+    var siretLabel = UILabel()
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -29,6 +33,10 @@ class ShowOfferViewController: UIViewController, AnyShowOfferViewController {
     private func setUp() {
         setUpVIP()
         setUpViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getOffer()
     }
 
     private func setUpVIP() {
@@ -45,14 +53,49 @@ class ShowOfferViewController: UIViewController, AnyShowOfferViewController {
     }
 
     private func setUpViews() {
-        view.backgroundColor = .systemRed
+        view.backgroundColor = .white
+        view.addSubview(scrollView)
+
+        scrollView.addSubview(mainStackView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+
+        mainStackView.axis = .vertical
+        mainStackView.spacing = 10
+        mainStackView.addArrangedSubview(offerSummaryView)
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            mainStackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            mainStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            mainStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
+            mainStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+
+        offerSummaryView.summaryStackView.addArrangedSubview(descriptionLabel)
+        offerSummaryView.summaryStackView.setCustomSpacing(20, after: offerSummaryView.dateLabel)
+        descriptionLabel.font = .preferredFont(forTextStyle: .callout)
+        descriptionLabel.numberOfLines = 0
+
+        offerSummaryView.summaryStackView.addArrangedSubview(siretLabel)
+        siretLabel.font = .preferredFont(forTextStyle: .footnote)
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    func getOffer() {
+        interactor?.getOffer()
     }
 
     func displayOffer(from viewModel: ShowOffer.GetOffer.ViewModel) {
-
+        let offer = viewModel.offer
+        offerSummaryView.configure(with: offer, store: OffersAPI())
+        descriptionLabel.text = offer.description
+        if let siret = offer.siret {
+            siretLabel.text = "Siret: \(siret)"
+        }
     }
 }

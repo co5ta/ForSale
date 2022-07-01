@@ -34,8 +34,8 @@ class OfferCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             offerSummaryView.topAnchor.constraint(equalTo: contentView.topAnchor),
             offerSummaryView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            offerSummaryView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            offerSummaryView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
+            offerSummaryView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            offerSummaryView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
     }
 }

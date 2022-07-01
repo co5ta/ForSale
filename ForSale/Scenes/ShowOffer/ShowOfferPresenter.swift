@@ -27,10 +27,8 @@ class ShowOfferPresenter {
         return formatter
     }()
 
-    func present(response: ShowOffer.GetOffer.Response)
-    {
+    func present(response: ShowOffer.GetOffer.Response) {
         let viewModelOffer = createViewModelOffer(with: response.offer, and: response.category)
-
         let viewModel = ShowOffer.GetOffer.ViewModel(offer: viewModelOffer)
         viewController?.displayOffer(from: viewModel)
     }
@@ -46,6 +44,8 @@ class ShowOfferPresenter {
             price: numberFormatter.string(from: price),
             date: dateFormatter.string(from: offer.creationDate),
             imagePath: offer.imagesUrl?.thumb,
-            isUrgent: offer.isUrgent)
+            isUrgent: offer.isUrgent,
+            description: offer.description,
+            siret: offer.siret)
     }
 }

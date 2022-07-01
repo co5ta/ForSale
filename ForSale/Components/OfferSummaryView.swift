@@ -12,6 +12,7 @@ class OfferSummaryView: UIView {
     var categoryLabel = UILabel()
     var imageView = UIImageView()
     var titleLabel = UILabel()
+    var summaryContainerView = UIView()
     var summaryStackView = UIStackView()
     var priceLabel = UILabel()
     var dateLabel = UILabel()
@@ -42,13 +43,28 @@ class OfferSummaryView: UIView {
             imageView.image = image
         }
     }
+
+    func configure(with offer: ShowOffer.GetOffer.ViewModel.Offer, store: AnyOfferStore) {
+        imageView.image = UIImage(named: "placeholder-image")
+        titleLabel.text = offer.title
+        priceLabel.text = offer.price
+        dateLabel.text = offer.date
+        categoryLabel.text = offer.categoryName
+        urgentLabel.isHidden = !offer.isUrgent
+
+        Task {
+            guard let imagePath = offer.imagePath,
+                  let image = await store.fetchImage(path: imagePath)
+            else { return }
+            imageView.image = image
+        }
+    }
     
     func setUp() {
-//        backgroundColor = .red
         setUpStackView()
         setUpImageView()
         setUpTitleLabel()
-        setUpBottomStackView()
+        setUpSummaryStackView()
     }
 }
 
@@ -66,7 +82,7 @@ private extension OfferSummaryView {
         ])
 
         mainStackView.addArrangedSubview(imageView)
-        mainStackView.addArrangedSubview(summaryStackView)
+        mainStackView.addArrangedSubview(summaryContainerView)
     }
 
     func setUpTitleLabel() {
@@ -83,7 +99,9 @@ private extension OfferSummaryView {
         ])
     }
 
-    func setUpBottomStackView() {
+    func setUpSummaryStackView() {
+        summaryContainerView.addSubview(summaryStackView)
+
         summaryStackView.axis = .vertical
         summaryStackView.spacing = 5
 
@@ -101,5 +119,13 @@ private extension OfferSummaryView {
 
         summaryStackView.addArrangedSubview(dateLabel)
         dateLabel.font = .preferredFont(forTextStyle: .caption1)
+
+        summaryStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            summaryStackView.topAnchor.constraint(equalTo: summaryContainerView.topAnchor),
+            summaryStackView.bottomAnchor.constraint(equalTo: summaryContainerView.bottomAnchor),
+            summaryStackView.leadingAnchor.constraint(equalTo: summaryContainerView.leadingAnchor, constant: 10),
+            summaryStackView.trailingAnchor.constraint(equalTo: summaryContainerView.trailingAnchor, constant: -10)
+        ])
     }
 }

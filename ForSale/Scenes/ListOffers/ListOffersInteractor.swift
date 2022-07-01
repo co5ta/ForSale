@@ -25,7 +25,7 @@ class ListOffersInteractor: AnyListOffersInteractor, AnyListOffersDataStore {
     func fetchOffers() async {
         do {
             categories = try await worker.fetchCategories()
-            offers = try await worker.fetchOffers()
+            offers = try await worker.fetchOffers().sortedByDate()
             let response = ListOffers.FetchOffers.Response(categories: categories, offers: offers)
             await presenter?.present(response: response)
         } catch {

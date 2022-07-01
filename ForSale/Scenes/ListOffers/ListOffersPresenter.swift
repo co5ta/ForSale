@@ -38,9 +38,7 @@ class ListOffersPresenter: AnyListOffersPresenter {
 
     func getViewModelOffers(from response: ListOffers.FetchOffers.Response)
     -> [ListOffers.FetchOffers.ViewModel.Offer] {
-        return response
-            .offers
-            .sortedByDate()
+        return response.offers
             .map { offer in
                 let category = response.categories.first(where: { $0.id == offer.categoryId })
                 return createViewModelOffer(with: offer, and: category)
