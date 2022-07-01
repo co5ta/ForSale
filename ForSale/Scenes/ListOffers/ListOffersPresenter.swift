@@ -31,11 +31,13 @@ class ListOffersPresenter: AnyListOffersPresenter {
 
     func present(response: ListOffers.FetchOffers.Response) async {
         let viewModelOffers = getViewModelOffers(from: response)
-        let viewModel = ListOffers.FetchOffers.ViewModel(offers: viewModelOffers)
+        let viewModelCategories = getViewModelCategories(from: response)
+        let viewModel = ListOffers.FetchOffers.ViewModel(categories: viewModelCategories, offers: viewModelOffers)
         viewController?.displayOffers(from: viewModel)
     }
 
-    func getViewModelOffers(from response: ListOffers.FetchOffers.Response) -> [ListOffers.FetchOffers.ViewModel.Offer] {
+    func getViewModelOffers(from response: ListOffers.FetchOffers.Response)
+    -> [ListOffers.FetchOffers.ViewModel.Offer] {
         return response
             .offers
             .sortedByDate()
@@ -45,12 +47,22 @@ class ListOffersPresenter: AnyListOffersPresenter {
             }
     }
 
+    func getViewModelCategories (from response: ListOffers.FetchOffers.Response)
+    -> [ListOffers.FetchOffers.ViewModel.Category] {
+        return response
+            .categories
+            .map {
+                ListOffers.FetchOffers.ViewModel.Category(id: $0.id, name: $0.name)
+            }
+    }
+
     func createViewModelOffer(with offer: Offer, and category: OfferCategory?)
     -> ListOffers.FetchOffers.ViewModel.Offer {
         let price = NSNumber(value: offer.price)
         return ListOffers.FetchOffers.ViewModel.Offer(
             id: offer.id,
             title: offer.title,
+            categoryId: offer.categoryId,
             categoryName: category?.name,
             price: numberFormatter.string(from: price),
             date: dateFormatter.string(from: offer.creationDate),

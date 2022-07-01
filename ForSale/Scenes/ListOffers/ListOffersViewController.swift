@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 protocol AnyListOffersViewController: AnyObject {
     func displayOffers(from viewModel: ListOffers.FetchOffers.ViewModel)
@@ -14,9 +15,13 @@ protocol AnyListOffersViewController: AnyObject {
 
 class ListOffersViewController: UIViewController, AnyListOffersViewController {
     lazy var collectionView = makeCollectionView()
-
+    private var menuButton: UIBarButtonItem?
+    private var categoriesMenu: UIMenu?
+    private var selectedCategoryId: Int?
+    private var cancellables = Set<AnyCancellable>()
     private var dataSource: DataSource?
-    var offers: [ListOffers.FetchOffers.ViewModel.Offer] = []
+    var viewModel: ListOffers.FetchOffers.ViewModel?
+    var offers = CurrentValueSubject<[ListOffers.FetchOffers.ViewModel.Offer], Never>([])
     var interactor: AnyListOffersInteractor?
 
     required init?(coder: NSCoder) {
@@ -58,14 +63,14 @@ class ListOffersViewController: UIViewController, AnyListOffersViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        bindOffersList()
+        Task {
+            await fetchOffers()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        Task {
-            await fetchOffers()
-        }
     }
 
     func fetchOffers() async {
@@ -73,16 +78,14 @@ class ListOffersViewController: UIViewController, AnyListOffersViewController {
     }
 
     func displayOffers(from viewModel: ListOffers.FetchOffers.ViewModel) {
-        offers = viewModel.offers
-        dataSource = makeDataSource()
-        applySnapshot()
+        self.viewModel = viewModel
+        offers.value = viewModel.offers
     }
 
     func display(errorMessage: String) {
         print("erreur")
     }
 }
-
 
 // MARK: - CollectionView
 
@@ -118,7 +121,7 @@ private extension ListOffersViewController {
     func applySnapshot(animate: Bool = true) {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
-        snapshot.appendItems(offers)
+        snapshot.appendItems(offers.value)
         dataSource?.apply(snapshot, animatingDifferences: animate)
     }
 
@@ -141,5 +144,57 @@ private extension ListOffersViewController {
 
     func makeCollectionView() -> UICollectionView {
         return UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
+    }
+
+    func bindOffersList() {
+        offers.sink { [weak self] _ in
+            guard let self = self else { return }
+            self.dataSource = self.makeDataSource()
+            self.applySnapshot()
+            self.makeMenu()
+        }
+        .store(in: &cancellables)
+    }
+}
+
+// MARK: - Categories filter
+
+private extension ListOffersViewController {
+    func makeMenu() {
+        categoriesMenu = UIMenu(
+            title: "Filtrer par catégorie",
+            options: .displayInline,
+            children: createMenuItems())
+        menuButton = UIBarButtonItem(image: UIImage(systemName: "list.bullet"), menu: categoriesMenu)
+        navigationItem.setRightBarButton(menuButton, animated: true)
+    }
+
+    func createMenuItems() -> [UIAction] {
+        guard let categories = viewModel?.categories else { return [] }
+        var items = categories.map { category -> UIAction in
+            let state: UIMenuElement.State = selectedCategoryId == category.id ? .on : .off
+            return UIAction(title: category.name, state: state) { [weak self] _ in
+                self?.applyOffersFilter(categoryId: category.id)
+            }
+        }
+        if selectedCategoryId != nil {
+            items.insert(UIAction(
+                title: "Réinitialiser",
+                image: UIImage(systemName: "x.circle"),
+                attributes: .destructive) { [weak self] _ in
+                self?.applyOffersFilter(categoryId: nil)
+            }, at: 0)
+        }
+        return items
+    }
+
+    func applyOffersFilter(categoryId: Int?) {
+        guard let viewModel = viewModel,
+              categoryId != selectedCategoryId
+        else { return }
+        selectedCategoryId = categoryId
+        offers.value = categoryId == nil
+            ? viewModel.offers
+            : viewModel.offers.filter { $0.categoryId == categoryId }
     }
 }

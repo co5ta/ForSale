@@ -14,15 +14,21 @@ enum ListOffers {
             var offers: [Offer]
         }
         struct ViewModel {
+            struct Category {
+                let id: Int
+                let name: String
+            }
             struct Offer: Hashable {
                 let id: Int
                 let title: String
+                let categoryId: Int
                 let categoryName: String?
                 let price: String?
                 let date: String?
                 let imagePath: String?
                 let isUrgent: Bool
             }
+            var categories: [ViewModel.Category]
             var offers: [ViewModel.Offer]
         }
     }

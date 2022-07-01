@@ -13,10 +13,10 @@ class ListOffersViewControllerTests: XCTestCase {
     var sut: ListOffersViewController!
     var interactorMock: ListOffersInteractorMock!
     let dummyOffer1 = ListOffers.FetchOffers.ViewModel.Offer(
-        id: 1, title: "title 1", categoryName: "categ 1",
+        id: 1, title: "title 1", categoryId: 11, categoryName: "categ 1",
         price: "14.00 €", date: "05/01/2022", imagePath: "", isUrgent: false)
     let dummyOffer2 = ListOffers.FetchOffers.ViewModel.Offer(
-        id: 2, title: "title 2", categoryName: "categ 2",
+        id: 2, title: "title 2", categoryId: 12, categoryName: "categ 2",
         price: "18,00 €", date: "18/12/2022", imagePath: "", isUrgent: true)
 
 
@@ -45,7 +45,7 @@ class ListOffersViewControllerTests: XCTestCase {
             dummyOffer1
         ]
 
-        let viewModel = ListOffers.FetchOffers.ViewModel(offers: offers)
+        let viewModel = ListOffers.FetchOffers.ViewModel(categories: [], offers: offers)
         sut.displayOffers(from: viewModel)
 
         let result = sut.collectionView.numberOfItems(inSection: 0)
@@ -58,7 +58,7 @@ class ListOffersViewControllerTests: XCTestCase {
             dummyOffer2
         ]
 
-        let viewModel = ListOffers.FetchOffers.ViewModel(offers: offers)
+        let viewModel = ListOffers.FetchOffers.ViewModel(categories: [], offers: offers)
         sut.displayOffers(from: viewModel)
 
         let result = sut.collectionView.numberOfItems(inSection: 0)
@@ -71,7 +71,7 @@ class ListOffersViewControllerTests: XCTestCase {
             dummyOffer2
         ]
 
-        let viewModel = ListOffers.FetchOffers.ViewModel(offers: offers)
+        let viewModel = ListOffers.FetchOffers.ViewModel(categories: [], offers: offers)
         sut.displayOffers(from: viewModel)
 
         let indexPath = IndexPath(item: 0, section: 0)
@@ -93,7 +93,7 @@ class ListOffersViewControllerTests: XCTestCase {
             dummyOffer2
         ]
 
-        let viewModel = ListOffers.FetchOffers.ViewModel(offers: offers)
+        let viewModel = ListOffers.FetchOffers.ViewModel(categories: [], offers: offers)
         sut.displayOffers(from: viewModel)
 
         let indexPath = IndexPath(item: 1, section: 0)
