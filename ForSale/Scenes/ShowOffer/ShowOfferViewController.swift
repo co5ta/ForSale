@@ -16,7 +16,7 @@ class ShowOfferViewController: UIViewController, AnyShowOfferViewController {
     var router: (AnyShowOfferRouter & AnyShowOfferDataPassing)?
     var scrollView = UIScrollView()
     var mainStackView = UIStackView()
-    var offerSummaryView = OfferSummaryView()
+    var offerSummaryView = OfferSummaryView.instantiate(fullScreen: false)
     var descriptionLabel = UILabel()
     var siretLabel = UILabel()
 
@@ -32,9 +32,12 @@ class ShowOfferViewController: UIViewController, AnyShowOfferViewController {
 
     private func setUp() {
         setUpVIP()
-        setUpViews()
+        setUpViewHierarchy()
+        setUpScrollView()
+        setUpMainStackView()
+        setUpOtherViews()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         getOffer()
     }
@@ -52,40 +55,6 @@ class ShowOfferViewController: UIViewController, AnyShowOfferViewController {
       router.dataStore = interactor
     }
 
-    private func setUpViews() {
-        view.backgroundColor = .white
-        view.addSubview(scrollView)
-
-        scrollView.addSubview(mainStackView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-
-        mainStackView.axis = .vertical
-        mainStackView.spacing = 10
-        mainStackView.addArrangedSubview(offerSummaryView)
-        mainStackView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            mainStackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            mainStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            mainStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
-            mainStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-        ])
-
-        offerSummaryView.summaryStackView.addArrangedSubview(descriptionLabel)
-        offerSummaryView.summaryStackView.setCustomSpacing(20, after: offerSummaryView.dateLabel)
-        descriptionLabel.font = .preferredFont(forTextStyle: .callout)
-        descriptionLabel.numberOfLines = 0
-
-        offerSummaryView.summaryStackView.addArrangedSubview(siretLabel)
-        siretLabel.font = .preferredFont(forTextStyle: .footnote)
-    }
-
     func getOffer() {
         interactor?.getOffer()
     }
@@ -97,5 +66,48 @@ class ShowOfferViewController: UIViewController, AnyShowOfferViewController {
         if let siret = offer.siret {
             siretLabel.text = "Siret: \(siret)"
         }
+    }
+}
+
+// MARK: - Views configuration
+
+private extension ShowOfferViewController {
+    func setUpViewHierarchy() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(mainStackView)
+        mainStackView.addArrangedSubview(offerSummaryView)
+        offerSummaryView.summaryStackView.addArrangedSubview(descriptionLabel)
+        offerSummaryView.summaryStackView.addArrangedSubview(siretLabel)
+    }
+
+    func setUpScrollView() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+
+    func setUpMainStackView() {
+        mainStackView.axis = .vertical
+        mainStackView.spacing = 10
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            mainStackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            mainStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            mainStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor),
+            mainStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+    }
+
+    func setUpOtherViews() {
+        view.backgroundColor = .systemBackground
+        offerSummaryView.summaryStackView.setCustomSpacing(20, after: offerSummaryView.dateLabel)
+        descriptionLabel.font = .preferredFont(forTextStyle: .callout)
+        descriptionLabel.numberOfLines = 0
+        siretLabel.font = .preferredFont(forTextStyle: .footnote)
     }
 }

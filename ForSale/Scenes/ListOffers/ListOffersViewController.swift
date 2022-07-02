@@ -17,14 +17,16 @@ class ListOffersViewController: UIViewController, AnyListOffersViewController {
     var interactor: AnyListOffersInteractor?
     var router: (AnyListOffersRouter & AnyListOffersDataPassing)?
     var viewModel: ListOffers.FetchOffers.ViewModel?
-    private var dataSource: DataSource?
+    lazy var collectionView = makeCollectionView()
     var offers = CurrentValueSubject<[ListOffers.FetchOffers.ViewModel.Offer], Never>([])
     private var cancellables = Set<AnyCancellable>()
-    lazy var collectionView = makeCollectionView()
+    private var dataSource: DataSource?
     private var menuButton: UIBarButtonItem?
     private var categoriesMenu: UIMenu?
     private var selectedCategoryId: Int?
     var selectedOfferIndex: Int?
+    /// True if the trait collection horizontal size class is Compact
+    lazy var isCompact: Bool = traitCollection.horizontalSizeClass == .compact
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -41,6 +43,14 @@ class ListOffersViewController: UIViewController, AnyListOffersViewController {
         setUpViews()
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        bindOffersList()
+        Task {
+            await fetchOffers()
+        }
+    }
+
     private func setUpVIP() {
         let viewController = self
         let interactor = ListOffersInteractor()
@@ -55,9 +65,12 @@ class ListOffersViewController: UIViewController, AnyListOffersViewController {
     }
 
     private func setUpViews() {
-        title = "Dernières annonces"
-        view.backgroundColor = .white
+        title = "Annonces"
+        let backButton = UIBarButtonItem(title: "Retour", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backButton
+        view.backgroundColor = .systemBackground
         view.addSubview(collectionView)
+        collectionView.backgroundColor = .clear
         collectionView.delegate = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -66,14 +79,6 @@ class ListOffersViewController: UIViewController, AnyListOffersViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        bindOffersList()
-        Task {
-            await fetchOffers()
-        }
     }
 
     func fetchOffers() async {
@@ -133,7 +138,7 @@ private extension ListOffersViewController {
 
     func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
+            widthDimension: .fractionalWidth(isCompact ? 1.0 : 0.5),
             heightDimension: .estimated(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         let groupSize = NSCollectionLayoutSize(
@@ -143,7 +148,6 @@ private extension ListOffersViewController {
             layoutSize: groupSize,
             subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = Constants.cellSpacing
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
@@ -163,7 +167,8 @@ private extension ListOffersViewController {
     }
 }
 
-// MARK: CollectionViewDelegate
+// MARK: - CollectionViewDelegate
+
 extension ListOffersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedOfferIndex = indexPath.item

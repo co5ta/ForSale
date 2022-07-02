@@ -36,6 +36,6 @@ class ListOffersRouter: NSObject, AnyListOffersRouter, AnyListOffersDataPassing 
     }
 
     func navigateToShowOffer(source: ListOffersViewController, destination: ShowOfferViewController) {
-        source.show(destination, sender: nil)
+        source.navigationController?.show(destination, sender: nil)
     }
 }

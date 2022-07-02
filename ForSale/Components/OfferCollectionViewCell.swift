@@ -8,7 +8,7 @@
 import UIKit
 
 class OfferCollectionViewCell: UICollectionViewCell {
-    var offerSummaryView = OfferSummaryView()
+    var offerSummaryView = OfferSummaryView.instantiate(fullScreen: true)
 
     override func prepareForReuse() {
         offerSummaryView.imageView.image = nil
@@ -29,13 +29,24 @@ class OfferCollectionViewCell: UICollectionViewCell {
     }
 
     private func setUp() {
+        setUpViewHierarchy()
+        setUpOfferSummaryView()
+    }
+
+    func setUpViewHierarchy() {
         contentView.addSubview(offerSummaryView)
+    }
+
+    func setUpOfferSummaryView() {
+        offerSummaryView.imageView.layer.cornerRadius = 10
+        offerSummaryView.imageView.layer.borderColor = UIColor.systemGray6.cgColor
+        offerSummaryView.imageView.layer.borderWidth = 1
         offerSummaryView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            offerSummaryView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            offerSummaryView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            offerSummaryView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            offerSummaryView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            offerSummaryView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+            offerSummaryView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -40),
+            offerSummaryView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            offerSummaryView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
         ])
     }
 }

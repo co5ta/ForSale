@@ -14,7 +14,7 @@ enum ShowOffer {
             let offer: Offer
         }
         struct ViewModel {
-            struct Offer {
+            struct Offer: AnyOffer {
                 let id: Int
                 let title: String
                 let categoryId: Int

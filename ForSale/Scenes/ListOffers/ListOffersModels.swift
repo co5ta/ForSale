@@ -18,7 +18,7 @@ enum ListOffers {
                 let id: Int
                 let name: String
             }
-            struct Offer: Hashable {
+            struct Offer: AnyOffer, Hashable {
                 let id: Int
                 let title: String
                 let categoryId: Int
