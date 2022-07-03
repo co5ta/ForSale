@@ -115,7 +115,7 @@ private extension ListOffersViewController {
 
     func makeCellRegistration() -> CellRegistration {
         CellRegistration { cell, indexPath, offer in
-            cell.configure(with: offer, store: OffersAPI())
+            cell.configure(with: offer)
         }
     }
 
@@ -139,7 +139,7 @@ private extension ListOffersViewController {
     func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(isCompact ? 1.0 : 0.5),
-            heightDimension: .estimated(1))
+            heightDimension: .estimated(500))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),

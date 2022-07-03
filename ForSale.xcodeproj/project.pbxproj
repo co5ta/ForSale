@@ -42,6 +42,7 @@
 		449354C8286EEB81002D68C9 /* ShowOfferInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449354C7286EEB81002D68C9 /* ShowOfferInteractor.swift */; };
 		449354CA286EEE4D002D68C9 /* ShowOfferPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449354C9286EEE4D002D68C9 /* ShowOfferPresenter.swift */; };
 		449354CC286EEE8F002D68C9 /* ShowOfferModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449354CB286EEE8F002D68C9 /* ShowOfferModels.swift */; };
+		44DDBEF62871AF5B00C7DCAF /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DDBEF52871AF5B00C7DCAF /* ImageLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		449354C7286EEB81002D68C9 /* ShowOfferInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOfferInteractor.swift; sourceTree = "<group>"; };
 		449354C9286EEE4D002D68C9 /* ShowOfferPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOfferPresenter.swift; sourceTree = "<group>"; };
 		449354CB286EEE8F002D68C9 /* ShowOfferModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOfferModels.swift; sourceTree = "<group>"; };
+		44DDBEF52871AF5B00C7DCAF /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +218,7 @@
 			children = (
 				441713A12869037C00AA5B3E /* OffersAPI.swift */,
 				441713A62869223C00AA5B3E /* NetworkError.swift */,
+				44DDBEF52871AF5B00C7DCAF /* ImageLoader.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				449354C8286EEB81002D68C9 /* ShowOfferInteractor.swift in Sources */,
 				441713692867876000AA5B3E /* ViewController.swift in Sources */,
 				4417138828678EE900AA5B3E /* ListOffersInteractor.swift in Sources */,
+				44DDBEF62871AF5B00C7DCAF /* ImageLoader.swift in Sources */,
 				4417139728685C1400AA5B3E /* OfferCategory.swift in Sources */,
 				441713BA286B1C9200AA5B3E /* ListOffersViewController.swift in Sources */,
 				441713652867876000AA5B3E /* AppDelegate.swift in Sources */,

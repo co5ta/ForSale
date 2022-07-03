@@ -61,7 +61,7 @@ class ShowOfferViewController: UIViewController, AnyShowOfferViewController {
 
     func displayOffer(from viewModel: ShowOffer.GetOffer.ViewModel) {
         let offer = viewModel.offer
-        offerSummaryView.configure(with: offer, store: OffersAPI())
+        offerSummaryView.configure(with: offer)
         descriptionLabel.text = offer.description
         if let siret = offer.siret {
             siretLabel.text = "Siret: \(siret)"

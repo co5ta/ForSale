@@ -29,6 +29,9 @@ class OfferSummaryView: UIView {
     var categoryLabel = UILabel()
     var priceLabel = UILabel()
     var dateLabel = UILabel()
+    var activityIndicator = UIActivityIndicatorView()
+    var imagePlaceholder = UIImage(named: "placeholder-image")
+    var imageLoader: AnyImageLoader = ImageLoader.shared
 
     /// True if the trait collection horizontal size class is Compact
     lazy var isCompact: Bool = traitCollection.horizontalSizeClass == .compact
@@ -53,23 +56,31 @@ class OfferSummaryView: UIView {
         setUpUrgentLabel()
         setUpUrgentImageView()
         setUpOthersViews()
+        setUpActivityIndicator()
     }
 
-    func configure(with offer: AnyOffer, store: AnyOfferStore) {
-        imageView.image = UIImage(named: "placeholder-image")
+    func configure(with offer: AnyOffer) {
         titleLabel.text = offer.title
         priceLabel.text = offer.price
         dateLabel.text = offer.date
         categoryLabel.text = offer.categoryName
         urgentLabel.isHidden = !offer.isUrgent
         urgentImageView.isHidden = !offer.isUrgent
-
         Task {
-            guard let imagePath = offer.imagePath,
-                  let image = await store.fetchImage(path: imagePath)
-            else { return }
-            imageView.image = image
+            imageView.image = await fetchImage(at: offer.imagePath, for: imageView) ?? imagePlaceholder
         }
+    }
+
+    func fetchImage(at path: String?, for imageView: UIImageView) async -> UIImage? {
+        let task: ImageTask = Task {
+            await imageLoader.cancelFetch(on: imageView)
+            guard let path = path else { return nil }
+            activityIndicator.startAnimating()
+            let image = try await imageLoader.fetchImage(at: path, for: imageView)
+            activityIndicator.stopAnimating()
+            return image
+        }
+        return try? await task.value
     }
 }
 
@@ -85,6 +96,7 @@ private extension OfferSummaryView {
         summaryStackView.addArrangedSubview(priceLabel)
         summaryStackView.addArrangedSubview(dateLabel)
         addSubview(urgentImageView)
+        addSubview(activityIndicator)
     }
 
     func setUpStackView() {
@@ -145,5 +157,15 @@ private extension OfferSummaryView {
     func setUpOthersViews() {
         priceLabel.font = .preferredFont(forTextStyle: .title3)
         dateLabel.font = .preferredFont(forTextStyle: .caption1)
+    }
+
+    func setUpActivityIndicator() {
+        activityIndicator.style = .large
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
+        ])
     }
 }

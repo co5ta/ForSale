@@ -15,7 +15,6 @@ protocol AnyURLSession {
 protocol AnyOfferStore {
     func fetchCategories() async throws -> [OfferCategory]
     func fetchOffers() async throws -> [Offer]
-    func fetchImage(path: String) async -> UIImage?
 }
 
 class OffersAPI: AnyOfferStore {
@@ -33,11 +32,6 @@ class OffersAPI: AnyOfferStore {
 
     func fetchOffers() async throws -> [Offer] {
         try await fetchData(type: [Offer].self, path: Endpoints.offers)
-    }
-
-    func fetchImage(path: String) async -> UIImage? {
-        guard let data = try? await fetchData(path: path) else { return nil }
-        return UIImage(data: data)
     }
 
     /// Fetchs and returns decoded data

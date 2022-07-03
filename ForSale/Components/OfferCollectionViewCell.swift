@@ -11,6 +11,7 @@ class OfferCollectionViewCell: UICollectionViewCell {
     var offerSummaryView = OfferSummaryView.instantiate(fullScreen: true)
 
     override func prepareForReuse() {
+        super.prepareForReuse()
         offerSummaryView.imageView.image = nil
     }
 
@@ -24,8 +25,8 @@ class OfferCollectionViewCell: UICollectionViewCell {
         setUp()
     }
 
-    func configure(with offer: ListOffers.FetchOffers.ViewModel.Offer, store: AnyOfferStore) {
-        offerSummaryView.configure(with: offer, store: store)
+    func configure(with offer: ListOffers.FetchOffers.ViewModel.Offer) {
+        offerSummaryView.configure(with: offer)
     }
 
     private func setUp() {
